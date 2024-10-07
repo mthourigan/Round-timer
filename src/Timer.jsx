@@ -364,7 +364,9 @@ function Timer() {
               className='toggle-duration'
               onClick={() => adjustTime('workMinutes', 1)}
             >
-              ▲
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.4143 14.7071L17.0001 16.1213L11.7072 10.8284L6.41431 16.1213L5.00009 14.7071L11.7072 8.00002L18.4143 14.7071Z" fill="black"/>
+              </svg>
             </button>
           )}
           <span className='large-count'>
@@ -375,7 +377,9 @@ function Timer() {
               className='toggle-duration'
               onClick={() => adjustTime('workMinutes', -1)}
             >
-              ▼
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.00006 9.41421L6.41427 8L11.7072 13.2929L17.0001 8L18.4143 9.41422L11.7072 16.1213L5.00006 9.41421Z" fill="black"/>
+              </svg>
             </button>
           )}
         </div>
@@ -388,7 +392,9 @@ function Timer() {
               className='toggle-duration'
               onClick={() => adjustTime('workSeconds', 1)}
             >
-              ▲
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.4143 14.7071L17.0001 16.1213L11.7072 10.8284L6.41431 16.1213L5.00009 14.7071L11.7072 8.00002L18.4143 14.7071Z" fill="black"/>
+              </svg>
             </button>
           )}
           <span className='large-count'>
@@ -399,7 +405,9 @@ function Timer() {
               className='toggle-duration'
               onClick={() => adjustTime('workSeconds', -1)}
             >
-              ▼
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.00006 9.41421L6.41427 8L11.7072 13.2929L17.0001 8L18.4143 9.41422L11.7072 16.1213L5.00006 9.41421Z" fill="black"/>
+              </svg>
             </button>
           )}
         </div>
