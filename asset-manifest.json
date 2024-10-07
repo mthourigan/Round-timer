@@ -1,17 +1,19 @@
 {
   "files": {
-    "main.css": "/Round-timer/static/css/main.351bdcf6.css",
+    "main.css": "/Round-timer/static/css/main.2a166bda.css",
     "main.js": "/Round-timer/static/js/main.397373f3.js",
     "static/js/453.0bc40201.chunk.js": "/Round-timer/static/js/453.0bc40201.chunk.js",
+    "static/media/Px-Grotesk-Bold.woff": "/Round-timer/static/media/Px-Grotesk-Bold.80867df04b9030767b71.woff",
+    "static/media/Px-Grotesk-Regular.woff": "/Round-timer/static/media/Px-Grotesk-Regular.9590e623282164604142.woff",
     "static/media/end-sound.mp3": "/Round-timer/static/media/end-sound.8f645a6c09fcf5426dae.mp3",
     "static/media/start-sound.mp3": "/Round-timer/static/media/start-sound.834bf6cada34ed44abf9.mp3",
     "index.html": "/Round-timer/index.html",
-    "main.351bdcf6.css.map": "/Round-timer/static/css/main.351bdcf6.css.map",
+    "main.2a166bda.css.map": "/Round-timer/static/css/main.2a166bda.css.map",
     "main.397373f3.js.map": "/Round-timer/static/js/main.397373f3.js.map",
     "453.0bc40201.chunk.js.map": "/Round-timer/static/js/453.0bc40201.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.351bdcf6.css",
+    "static/css/main.2a166bda.css",
     "static/js/main.397373f3.js"
   ]
 }
