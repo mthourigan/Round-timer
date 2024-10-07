@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Timer.css';
+import './Timer.scss';
 
 import startSound from './audio/start-sound.mp3';
 import endSound from './audio/end-sound.mp3';

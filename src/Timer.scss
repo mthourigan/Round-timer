@@ -1,0 +1,229 @@
+// Define variables
+$background-work: #09F097;
+$background-break: #FF5555;
+$text-color: rgba(0, 0, 0, 0.8);
+$text-color-light: rgba(0, 0, 0, 0.4);
+$button-background: rgba(0, 0, 0, 0.1);
+$button-hover-background: rgba(0, 0, 0, 0.2);
+$button-active-background: rgba(0, 0, 0, 0.3);
+
+
+@font-face {
+    font-family: 'Px Grotesk';
+    src: url("../src/assets/Px-Grotesk-Regular.woff") format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+  
+  @font-face {
+    font-family: 'Px Grotesk';
+    src: url('../src/assets/Px-Grotesk-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+
+// .timer-body styles
+.timer-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: auto;
+  min-height: 100vh;
+  width: auto;
+
+  &.default {
+    /* background-color: aqua; */
+  }
+
+  &.work {
+    background-color: $background-work;
+  }
+
+  &.break {
+    background-color: $background-break;
+  }
+}
+
+// .clock styles
+.clock {
+  /* background-color: gold; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100vw;
+  padding-right: 1rem;
+
+  .minutes,
+  .seconds {
+    /* background-color: red; */
+    font-family: 'Px Grotesk';
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 46%;
+    color: $text-color;
+
+    .large-count {
+      font-size: 30vw;
+      font-weight: 600;
+      color: $text-color;
+    }
+
+    .toggle-duration {
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 24px;
+      background-color: $button-background;
+
+      &:hover {
+        background-color: $button-hover-background;
+      }
+
+      &:active {
+        background-color: $button-active-background;
+        transform: scaleX(0.95) scaleY(0.95);
+      }
+    }
+  }
+
+  .colon {
+    .large-count {
+      font-family: 'Px Grotesk';
+      font-weight: 700;
+      font-size: 30vw;
+      font-weight: 600;
+      color: $text-color;
+    }
+  }
+
+  .milliseconds {
+    font-family: 'Px Grotesk';
+    font-weight: 700;
+    width: 4%;
+    color: rgba(0, 0, 0, 0.7);
+    /* background-color: blue; */
+
+    .milliseconds-count {
+      font-size: 2vw;
+      font-weight: 600;
+    }
+  }
+}
+
+// .controls-top and .controls-bottom styles
+.controls-top,
+.controls-bottom {
+  /* background-color: chartreuse; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 2rem;
+
+  .col-actions {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+
+    .play-button {
+      width: 96px;
+      height: 96px;
+      border: none;
+      border-radius: 48px;
+      background-color: $button-background;
+      font-family: 'Px Grotesk';
+      font-weight: 400;
+
+      &:hover {
+        background-color: $button-hover-background;
+      }
+
+      &:active {
+        background-color: $button-active-background;
+        transform: scaleX(0.95) scaleY(0.95);
+      }
+    }
+  }
+}
+
+// .controls-top specific styles
+.controls-top {
+  .current-round {
+    display: flex;
+    align-items: center;
+    width: 80px;
+    padding-left: 4rem;
+  }
+
+  .col-inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 2rem;
+
+    .duration-input {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: 0.5rem;
+      padding-left: 2rem;
+      font-family: 'Px Grotesk';
+      font-weight: 400;
+
+      p {
+        margin: 0;
+      }
+
+      .time-type {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding-bottom: 1px;
+        gap: 0.5rem;
+        margin-right: 0.5rem;
+        color: $text-color;
+      }
+
+      .field-container {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .field-label {
+          font-size: 12px;
+          font-weight: 600;
+          color: $text-color-light;
+          font-family: 'Px Grotesk';
+          font-weight: 400;
+        }
+
+        .time-inputs {
+          width: 50px;
+          height: 40px;
+          background-color: rgba(0, 0, 0, 0.08);
+          border: none;
+          border-radius: 4px;
+          padding: 0 12px;
+          font-size: 16px;
+          font-weight: 400;
+          color: $text-color;
+          font-family: 'Px Grotesk';
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+.controls-bottom {
+  justify-content: center;
+  align-items: center; 
+}
