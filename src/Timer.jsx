@@ -255,13 +255,14 @@ function Timer() {
     <div className={`timer-body ${backgroundClass}`}>
       <div className='controls-top'>
         <div className='current-round'>
-          <p className='time-type'>
+          <span>
             {infiniteIteration
-              ? roundsCompletedRef.current + 1
-              : Math.min(roundsCompletedRef.current + 1, roundCount)}
-            {' of '}
+               ? roundsCompletedRef.current + 1
+               : Math.min(roundsCompletedRef.current + 1, roundCount)}
+              {' of '}
             {infiniteIteration ? '∞' : roundCount}
-          </p>
+          </span>
+
         </div>
         <div className='col-inputs'>
           <div className='duration-input'>
