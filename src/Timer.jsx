@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Timer.scss';
-
 import startSound from './audio/start-sound_1.mp3';
 import endSound from './audio/end-sound_1.mp3';
 
@@ -35,9 +34,38 @@ function Timer() {
 
   // Initialize audio elements
   useEffect(() => {
+    // Start sound
     startAudioRef.current = new Audio(startSound);
+    startAudioRef.current.preload = 'auto';
+    startAudioRef.current.load();
+  
+    // End sound
     endAudioRef.current = new Audio(endSound);
+    endAudioRef.current.preload = 'auto';
+    endAudioRef.current.load();
+  
+    // Add event listeners to check when audio is loaded
+    endAudioRef.current.addEventListener('canplaythrough', () => {
+      console.log('End sound is ready to play.');
+    });
+
+    // Add event listeners to check when audio is loaded
+    startAudioRef.current.addEventListener('canplaythrough', () => {
+      console.log('Start sound is ready to play.');
+    });
+  
+    // Optional: Handle loading errors
+    endAudioRef.current.addEventListener('error', (e) => {
+      console.error('Error loading end sound:', e);
+    });
+  
+    // Cleanup event listeners on unmount
+    return () => {
+      endAudioRef.current.removeEventListener('canplaythrough', () => {});
+      endAudioRef.current.removeEventListener('error', () => {});
+    };
   }, []);
+  
 
   // Play sounds on phase change
   useEffect(() => {
@@ -366,7 +394,7 @@ function Timer() {
               onClick={() => adjustTime('workMinutes', 1)}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.4143 14.7071L17.0001 16.1213L11.7072 10.8284L6.41431 16.1213L5.00009 14.7071L11.7072 8.00002L18.4143 14.7071Z" fill="black"/>
+                <path fillRule="evenodd" clipRule="evenodd" d="M18.4143 14.7071L17.0001 16.1213L11.7072 10.8284L6.41431 16.1213L5.00009 14.7071L11.7072 8.00002L18.4143 14.7071Z" fill="black"/>
               </svg>
             </button>
           )}
@@ -379,7 +407,7 @@ function Timer() {
               onClick={() => adjustTime('workMinutes', -1)}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.00006 9.41421L6.41427 8L11.7072 13.2929L17.0001 8L18.4143 9.41422L11.7072 16.1213L5.00006 9.41421Z" fill="black"/>
+                <path fillRule="evenodd" clipRule="evenodd" d="M5.00006 9.41421L6.41427 8L11.7072 13.2929L17.0001 8L18.4143 9.41422L11.7072 16.1213L5.00006 9.41421Z" fill="black"/>
               </svg>
             </button>
           )}
@@ -394,7 +422,7 @@ function Timer() {
               onClick={() => adjustTime('workSeconds', 1)}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.4143 14.7071L17.0001 16.1213L11.7072 10.8284L6.41431 16.1213L5.00009 14.7071L11.7072 8.00002L18.4143 14.7071Z" fill="black"/>
+                <path fillRule="evenodd" clipRule="evenodd" d="M18.4143 14.7071L17.0001 16.1213L11.7072 10.8284L6.41431 16.1213L5.00009 14.7071L11.7072 8.00002L18.4143 14.7071Z" fill="black"/>
               </svg>
             </button>
           )}
@@ -407,7 +435,7 @@ function Timer() {
               onClick={() => adjustTime('workSeconds', -1)}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.00006 9.41421L6.41427 8L11.7072 13.2929L17.0001 8L18.4143 9.41422L11.7072 16.1213L5.00006 9.41421Z" fill="black"/>
+                <path fillRule="evenodd" clipRule="evenodd" d="M5.00006 9.41421L6.41427 8L11.7072 13.2929L17.0001 8L18.4143 9.41422L11.7072 16.1213L5.00006 9.41421Z" fill="black"/>
               </svg>
             </button>
           )}
