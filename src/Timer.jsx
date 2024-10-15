@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Timer.scss';
 
-import startSound from './audio/start-sound.mp3';
-import endSound from './audio/end-sound.mp3';
+import startSound from './audio/start-sound_1.mp3';
+import endSound from './audio/end-sound_1.mp3';
 
 function Timer() {
   // State variables
