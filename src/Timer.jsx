@@ -21,7 +21,6 @@ function Timer() {
   const startTimeRef = useRef(null);
   const elapsedTimeRef = useRef(0);
   const totalDurationRef = useRef(getTotalDuration('work'));
-
   const currentPhaseRef = useRef('work');
   const roundsCompletedRef = useRef(0);
 
@@ -81,7 +80,9 @@ function Timer() {
       } else if (previousPhaseRef.current === 'work' && currentPhase === 'break') {
         // Transitioned from 'work' to 'break', play end-sound
         if (endAudioRef.current) {
-          endAudioRef.current.play();
+          endAudioRef.current.play().catch((error) => {
+            console.error('Error playing end sound:', error);
+          });
         }
       }
     }
@@ -193,6 +194,14 @@ function Timer() {
   function toggleStartPause() {
     if (!hasStarted) {
       setHasStarted(true);
+    }
+    if (!isRunning) {
+      // Timer is starting from a paused state
+      if (startAudioRef.current) {
+        startAudioRef.current.play().catch((error) => {
+          console.error('Error playing start sound:', error);
+        });
+      }
     }
     setIsRunning(!isRunning);
   }
