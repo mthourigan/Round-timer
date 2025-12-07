@@ -1,0 +1,244 @@
+@font-face {
+  font-family: 'Px Grotesk';
+  src: url('./assets/Px-Grotesk-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Px Grotesk';
+  src: url('./assets/Px-Grotesk-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.timer-shell {
+  min-height: 100vh;
+  color: #111111;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px 28px;
+  font-family: 'Px Grotesk', Arial, sans-serif;
+}
+
+.timer-shell.default {
+  background: #ffffff;
+}
+
+.timer-shell.work {
+  background: #09f097;
+}
+
+.timer-shell.break {
+  background: #ff5555;
+}
+
+.timer-top {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  font-size: 14px;
+  color: #3a3a3a;
+}
+
+.timer-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.timer-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  line-height: 0.9;
+  gap: 0.5rem;
+}
+
+.timer-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.timer-time-main {
+  font-size: clamp(140px, 24vw, 360px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-colon {
+  font-size: clamp(140px, 24vw, 360px);
+  font-weight: 600;
+  padding: 0 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-dot {
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 600;
+  padding: 0 6px;
+}
+
+.timer-millis {
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.toggle-duration {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+
+.toggle-duration:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.toggle-duration:active {
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: scale(0.96);
+}
+
+.timer-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.timer-start-button {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: none;
+  background: #c9c9c9;
+  color: #333333;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  transition: transform 120ms ease, background-color 120ms ease;
+}
+
+.timer-start-button:hover {
+  background: #bfbfbf;
+}
+
+.timer-start-button:active {
+  transform: scale(0.98);
+}
+
+.timer-bottom {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: 24px;
+  margin-top: 24px;
+  font-size: 14px;
+  border-top: 1px solid #e6e6e6;
+  padding-top: 12px;
+}
+
+.timer-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timer-group-label {
+  font-size: 14px;
+  color: #333333;
+}
+
+.timer-input-row {
+  display: flex;
+  gap: 12px;
+}
+
+.timer-input-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: #4a4a4a;
+}
+
+.timer-input-stack input {
+  width: 64px;
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  background: #f2f2f2;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 14px;
+  text-align: center;
+  color: #111111;
+}
+
+.timer-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 14px;
+  color: #333333;
+}
+
+.timer-infinite {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.timer-infinite input {
+  width: 18px;
+  height: 18px;
+}
+
+.timer-rounds {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timer-rounds input {
+  width: 68px;
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  background: #f2f2f2;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-size: 14px;
+  text-align: center;
+  color: #111111;
+}
+
+@media (max-width: 768px) {
+  .timer-shell {
+    padding: 20px 16px;
+  }
+
+  .timer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
