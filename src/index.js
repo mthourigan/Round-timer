@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './App';
-import Timer from './Timer';
 import TimerCodex from './Timer-codex';
 import reportWebVitals from './reportWebVitals';
 
@@ -10,7 +8,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <TimerCodex />
-    {/* <Timer /> */}
   </React.StrictMode>
 );
 

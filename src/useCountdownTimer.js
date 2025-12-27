@@ -125,7 +125,7 @@ export function useCountdownTimer({
       setHasStarted(true);
       totalDurationRef.current = getTotalDuration(currentPhaseRef.current);
     }
-    if (!isRunning && startSoundRef.current) {
+    if (!isRunning && startSoundRef.current && currentPhaseRef.current === 'work') {
       startSoundRef.current.play();
     }
     setIsRunning((prev) => !prev);

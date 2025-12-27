@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Timer-codex.scss';
 import { useCountdownTimer } from './useCountdownTimer';
+import TimerControls from './components/TimerControls';
+import TimerDisplay from './components/TimerDisplay';
 
 function TimerCodex() {
   const [workMinutes, setWorkMinutes] = useState(5);
@@ -17,7 +19,6 @@ function TimerCodex() {
     hasStarted,
     currentPhase,
     roundsCompleted,
-    workProgress,
     toggleStartPause,
     resetTimer,
   } = useCountdownTimer({
@@ -87,125 +88,36 @@ function TimerCodex() {
           )}
         </div>
 
-        <div className="center">
-          <div className="display">
-            <span className="time-main">
-              {String(displayMinutes).padStart(2, '0')}
-            </span>
-            <span className="colon">:</span>
-            <span className="time-main">
-              {String(displaySeconds).padStart(2, '0')}
-            </span>
-          </div>
-
-          <div className="actions">
-            <button className="start-button" type="button" onClick={toggleStartPause}>
-              {startLabel}
-            </button>
-            {hasStarted && !isRunning && (
-              <button className="start-button" type="button" onClick={resetTimer}>
-                Reset
-              </button>
-            )}
-          </div>
-        </div>
+        <TimerDisplay
+          displayMinutes={displayMinutes}
+          displaySeconds={displaySeconds}
+          startLabel={startLabel}
+          hasStarted={hasStarted}
+          isRunning={isRunning}
+          onToggleStartPause={toggleStartPause}
+          onReset={resetTimer}
+        />
 
         {showControls && (
-          <div className="bottom">
-            <div className="controls-time">
-              <div className="input-group">
-                <span className="group-label">Work</span>
-                <div className="input-row">
-                  <div className="input-stack">
-                    <label htmlFor="codex-work-min">Min</label>
-                    <input
-                      id="codex-work-min"
-                      type="number"
-                      value={displayInputValue(workMinutes)}
-                      onChange={handleMinutesChange(setWorkMinutes)}
-                      disabled={hasStarted}
-                      placeholder="0"
-                    />
-                  </div>
-                  <div className="input-stack">
-                    <label htmlFor="codex-work-sec">Sec</label>
-                    <input
-                      id="codex-work-sec"
-                      type="number"
-                      value={displayInputValue(workSeconds)}
-                      onChange={handleSecondsChange(setWorkSeconds, setWorkMinutes)}
-                      disabled={hasStarted}
-                      placeholder="0"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="input-group">
-                <span className="group-label">Rest</span>
-                <div className="input-row">
-                  <div className="input-stack">
-                    <label htmlFor="codex-rest-min">Min</label>
-                    <input
-                      id="codex-rest-min"
-                      type="number"
-                      value={displayInputValue(breakMinutes)}
-                      onChange={handleMinutesChange(setBreakMinutes)}
-                      disabled={hasStarted}
-                      placeholder="0"
-                    />
-                  </div>
-                  <div className="input-stack">
-                    <label htmlFor="codex-rest-sec">Sec</label>
-                    <input
-                      id="codex-rest-sec"
-                      type="number"
-                      value={displayInputValue(breakSeconds)}
-                      onChange={handleSecondsChange(setBreakSeconds, setBreakMinutes)}
-                      disabled={hasStarted}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="meta">
-              <div className={`rounds ${infiniteIteration ? 'hidden' : ''}`}>
-                <span className="text-secondary">Rounds</span>
-                <input
-                  type="number"
-                  value={roundCount}
-                  onChange={handleRoundCountChange}
-                  disabled={infiniteIteration || hasStarted}
-                />
-              </div>
-
-              <label className="infinite">
-                <span className="label text-secondary">Infinite</span>
-                <span className="toggle">
-                  <input
-                    type="checkbox"
-                    checked={infiniteIteration}
-                    onChange={(event) => setInfiniteIteration(event.target.checked)}
-                    disabled={hasStarted}
-                    aria-label="Toggle infinite rounds"
-                  />
-                  <span className="toggle-track" aria-hidden="true" />
-                </span>
-              </label>
-            </div>
-          </div>
+          <TimerControls
+            hasStarted={hasStarted}
+            workMinutes={workMinutes}
+            workSeconds={workSeconds}
+            breakMinutes={breakMinutes}
+            breakSeconds={breakSeconds}
+            roundCount={roundCount}
+            infiniteIteration={infiniteIteration}
+            onWorkMinutesChange={handleMinutesChange(setWorkMinutes)}
+            onWorkSecondsChange={handleSecondsChange(setWorkSeconds, setWorkMinutes)}
+            onBreakMinutesChange={handleMinutesChange(setBreakMinutes)}
+            onBreakSecondsChange={handleSecondsChange(setBreakSeconds, setBreakMinutes)}
+            onRoundCountChange={handleRoundCountChange}
+            onToggleInfinite={(event) => setInfiniteIteration(event.target.checked)}
+            displayInputValue={displayInputValue}
+          />
         )}
       </div>
 
-      {hasStarted && currentPhase === 'work' && (
-        <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{ width: `${Math.min(100, Math.max(0, workProgress * 100))}%` }}
-          />
-        </div>
-      )}
     </>
   );
 }
