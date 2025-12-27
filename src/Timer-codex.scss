@@ -1,0 +1,355 @@
+@font-face {
+  font-family: 'Px Grotesk';
+  src: url('./assets/Px-Grotesk-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Px Grotesk';
+  src: url('./assets/Px-Grotesk-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+$font-family: 'Px Grotesk', Arial, sans-serif;
+$font-size-base: 1rem;
+$font-size-label: 0.75rem;
+
+$count-down: rgba(0, 0, 0, 0.75);
+$highlight: #09E48F;
+$rest: #ff5555;
+
+$primary-text: #19191C;
+$secondary-text: #545156;
+$tertiary-text: #6A6A73;
+
+$accent: #E7E7EE;
+$accent-active: #DADAE2;
+$accent-transparent: rgba(0, 0, 0, 0.08);
+$accent-transparent-hover: rgba(0, 0, 0, 0.2);
+$accent-transparent-active: rgba(0, 0, 0, 0.4);
+
+$border-default: #A6A6AC;
+
+$toggle-on: $highlight;
+$toggle-off: $accent-active;
+// $toggle-focus: #2b8cff;
+// $toggle-on: $highlight;
+// $toggle-off: $border-default;
+// $toggle-focus: #2b8cff;
+
+%time-large {
+  font-size: clamp(140px, 24vw, 360px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+%time-small {
+  font-size: clamp(36px, 5vw, 72px);
+  font-variant-numeric: tabular-nums;
+}
+
+%input-shell {
+  border: 1px solid transparent;
+  background: $accent;
+  border-radius: 8px;
+  padding: 0 12px;
+  color: $primary-text;
+}
+
+%input-field {
+  @extend %input-shell;
+  width: 70px;
+  height: 40px;
+  font-family: $font-family;
+  font-size: $font-size-base;
+  text-align: left;
+  color: $primary-text;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+
+  &:hover {
+    border-color: $border-default;
+  }
+
+  &:focus {
+    border-color: $highlight;
+    background: $accent-active;
+    outline: none;
+  }
+}
+
+.text-primary {
+  color: $primary-text;
+  font-weight: 600;
+}
+
+.text-secondary {
+  color: $secondary-text;
+  font-weight: 500;
+}
+
+.text-tertiary {
+  color: $tertiary-text;
+  font-weight: 500;
+}
+
+.codex-shell {
+  min-height: 100vh;
+  color: $count-down;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px 28px;
+  font-family: $font-family;
+
+  &.default {
+    background: #ffffff;
+  }
+
+  &.work {
+    background: $highlight;
+  }
+
+  &.break {
+    background: $rest;
+  }
+
+  .top {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    font-size: $font-size-base;
+    font-weight: 500;
+    color: $primary-text;
+  }
+
+  .center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+  }
+
+  .display {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    line-height: 0.9;
+  }
+
+  .time-main {
+    @extend %time-large;
+  }
+
+  .colon {
+    @extend %time-large;
+    padding: 0 16px;
+  }
+
+  .dot {
+    @extend %time-small;
+    font-weight: 600;
+    padding: 0 6px;
+  }
+
+  .millis {
+    @extend %time-small;
+    font-weight: 400;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .start-button {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: none;
+    background: $accent-transparent;
+    color: $primary-text;
+    font-size: $font-size-base;
+    font-family: $font-family;
+    cursor: pointer;
+    transition: transform 120ms ease, background-color 120ms ease;
+
+    &:hover {
+      background: $accent-transparent-hover;
+    }
+
+    &:active {
+      background: $accent-transparent-active;
+      transform: scale(0.98);
+    }
+  }
+
+  .bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    gap: 24px;
+    font-size: $font-size-label;
+    padding-top: 12px;
+  }
+
+  .controls-time {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+
+    span {
+      font-size: $font-size-base;
+      color: $primary-text;
+    }
+  }
+
+  // .group-label {
+  //   font-size: $font-size-label;
+  //   color: magenta;
+  // }
+
+  .input-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .input-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: $font-size-label;
+    color: $tertiary-text;
+
+    input {
+      @extend %input-field;
+    }
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    font-size: $font-size-label;
+    color: $primary-text;
+  }
+
+  .infinite {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+
+    .label {
+      font-size: $font-size-base;
+      color: $secondary-text;
+    }
+
+    .toggle {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      width: 50px;
+      height: 28px;
+    }
+
+    .toggle input {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .toggle-track {
+      width: 100%;
+      height: 100%;
+      background: $toggle-off;
+      border-radius: 999px;
+      transition: background 140ms ease, box-shadow 140ms ease;
+      position: relative;
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 20px;
+      height: 20px;
+      background: #ffffff;
+      border-radius: 50%;
+      // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+      transition: transform 140ms ease, background 100ms ease;
+    }
+
+    .toggle input:checked + .toggle-track {
+      background: $toggle-on;
+    }
+
+    .toggle input:checked + .toggle-track::after {
+      transform: translateX(22px);
+      background: #ffffff;
+    }
+
+    .toggle input:disabled + .toggle-track {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .rounds {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 180ms ease, transform 180ms ease, max-width 180ms ease;
+
+    span {
+      font-size: $font-size-base
+    }
+
+    input {
+      @extend %input-field;
+    }
+
+    &.hidden {
+      opacity: 0;
+      transform: translateY(8px);
+      max-width: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px 16px;
+
+    .bottom {
+      flex-direction: column;
+      align-items: left;
+
+        .controls-time {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+    }
+  }
+}
