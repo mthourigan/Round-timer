@@ -19,6 +19,7 @@ function TimerCodex() {
     hasStarted,
     currentPhase,
     roundsCompleted,
+    progress,
     toggleStartPause,
     resetTimer,
   } = useCountdownTimer({
@@ -96,6 +97,7 @@ function TimerCodex() {
         startLabel={startLabel}
         hasStarted={hasStarted}
         isRunning={isRunning}
+        progress={progress}
         onToggleStartPause={toggleStartPause}
         onReset={resetTimer}
       />

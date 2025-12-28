@@ -19,6 +19,7 @@ export function useCountdownTimer({
   const [roundsCompleted, setRoundsCompleted] = useState(0);
   const [displayMinutes, setDisplayMinutes] = useState(workMinutes);
   const [displaySeconds, setDisplaySeconds] = useState(workSeconds);
+  const [progress, setProgress] = useState(0);
 
   const timerRef = useRef(null);
   const startTimeRef = useRef(null);
@@ -47,6 +48,10 @@ export function useCountdownTimer({
     const seconds = remainingSeconds % 60;
     setDisplayMinutes(minutes);
     setDisplaySeconds(seconds);
+    if (totalDurationRef.current > 0) {
+      const pct = 1 - Math.max(0, timeLeft) / totalDurationRef.current;
+      setProgress(Math.min(1, Math.max(0, pct)));
+    }
   }, []);
 
   const incrementRoundsCompleted = useCallback(() => {
@@ -70,6 +75,7 @@ export function useCountdownTimer({
     setRoundsCompleted(0);
     setDisplayMinutes(workMinutes);
     setDisplaySeconds(workSeconds);
+    setProgress(0);
     finalHoldRef.current = false;
     suppressEndSoundRef.current = false;
   }, [getTotalDuration, workMinutes, workSeconds]);
@@ -141,9 +147,14 @@ export function useCountdownTimer({
         timerRef.current = requestAnimationFrame(updateTimer);
       } else if (timeLeft <= 0) {
         setDisplayTime(0);
+        setProgress(1);
         handlePhaseCompletion();
       } else {
         setDisplayTime(timeLeft);
+        if (totalDurationRef.current > 0) {
+          const pct = 1 - Math.max(0, timeLeft) / totalDurationRef.current;
+          setProgress(Math.min(1, Math.max(0, pct)));
+        }
         timerRef.current = requestAnimationFrame(updateTimer);
       }
     },
@@ -171,6 +182,7 @@ export function useCountdownTimer({
       const seconds = activePhase === 'work' ? workSeconds : breakSeconds;
       setDisplayMinutes(minutes);
       setDisplaySeconds(seconds);
+      setProgress(0);
     }
   }, [breakMinutes, breakSeconds, getTotalDuration, isRunning, workMinutes, workSeconds]);
 
@@ -228,6 +240,7 @@ export function useCountdownTimer({
     hasStarted,
     currentPhase,
     roundsCompleted,
+    progress,
     toggleStartPause,
     resetTimer,
   };
