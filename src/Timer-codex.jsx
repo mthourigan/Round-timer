@@ -77,26 +77,28 @@ function TimerCodex() {
     <>
       <div className={`codex-shell ${backgroundClass}`}>
         <div className="top">
-          {currentPhase === 'break' ? (
-            <span className="round-indicator">
-              Rest&ensp;•&ensp;Round {nextRoundNumber} coming up...
-            </span>
-          ) : (
-            <span className="round-indicator">
-              Round {displayRoundCurrent} of {displayRoundTotal}
-            </span>
-          )}
+          <div className="round-indicator-container">
+            {currentPhase === 'break' ? (
+              <span className="round-indicator">
+                Rest now, round {nextRoundNumber} coming up ...
+              </span>
+            ) : (
+              <span className="round-indicator">
+                Round {displayRoundCurrent} / {displayRoundTotal}
+              </span>
+            )}
+          </div>
         </div>
 
-        <TimerDisplay
-          displayMinutes={displayMinutes}
-          displaySeconds={displaySeconds}
-          startLabel={startLabel}
-          hasStarted={hasStarted}
-          isRunning={isRunning}
-          onToggleStartPause={toggleStartPause}
-          onReset={resetTimer}
-        />
+      <TimerDisplay
+        displayMinutes={displayMinutes}
+        displaySeconds={displaySeconds}
+        startLabel={startLabel}
+        hasStarted={hasStarted}
+        isRunning={isRunning}
+        onToggleStartPause={toggleStartPause}
+        onReset={resetTimer}
+      />
 
         {showControls && (
           <TimerControls

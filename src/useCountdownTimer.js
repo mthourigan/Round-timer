@@ -24,9 +24,11 @@ export function useCountdownTimer({
   const startTimeRef = useRef(null);
   const elapsedTimeRef = useRef(0);
   const totalDurationRef = useRef(0);
-  const currentPhaseRef = useRef('work');
+  const phaseRef = useRef('work'); // work | break | rest-hold
   const roundsCompletedRef = useRef(0);
   const previousPhaseRef = useRef(null);
+  const finalHoldRef = useRef(false);
+  const suppressEndSoundRef = useRef(false);
   const startSoundRef = useRef(null);
   const endSoundRef = useRef(null);
 
@@ -47,11 +49,6 @@ export function useCountdownTimer({
     setDisplaySeconds(seconds);
   }, []);
 
-  const setAndUpdateCurrentPhase = useCallback((phase) => {
-    currentPhaseRef.current = phase;
-    setCurrentPhase(phase);
-  }, []);
-
   const incrementRoundsCompleted = useCallback(() => {
     roundsCompletedRef.current += 1;
     setRoundsCompleted(roundsCompletedRef.current);
@@ -67,49 +64,82 @@ export function useCountdownTimer({
     startTimeRef.current = null;
     setIsRunning(false);
     setHasStarted(false);
-    setAndUpdateCurrentPhase('work');
+    phaseRef.current = 'work';
+    setCurrentPhase('work');
     roundsCompletedRef.current = 0;
     setRoundsCompleted(0);
     setDisplayMinutes(workMinutes);
     setDisplaySeconds(workSeconds);
-  }, [getTotalDuration, setAndUpdateCurrentPhase, workMinutes, workSeconds]);
+    finalHoldRef.current = false;
+    suppressEndSoundRef.current = false;
+  }, [getTotalDuration, workMinutes, workSeconds]);
 
   const startPhase = useCallback(
     (phase) => {
-      setAndUpdateCurrentPhase(phase);
+      phaseRef.current = phase;
+      setCurrentPhase(phase);
       totalDurationRef.current = getTotalDuration(phase);
       elapsedTimeRef.current = 0;
       startTimeRef.current = performance.now();
       setDisplayTime(totalDurationRef.current);
       timerRef.current = requestAnimationFrame(updateTimer);
     },
-    [getTotalDuration, setAndUpdateCurrentPhase, setDisplayTime]
+    [getTotalDuration, setDisplayTime]
   );
 
   const handlePhaseCompletion = useCallback(() => {
-    if (currentPhaseRef.current === 'work') {
+    if (phaseRef.current === 'work') {
       incrementRoundsCompleted();
 
-      if (!infiniteIteration && roundsCompletedRef.current >= roundCount) {
-        if (endSoundRef.current) {
-          endSoundRef.current.play();
-        }
-        resetTimer();
-        return;
+      const isFinal = !infiniteIteration && roundsCompletedRef.current >= roundCount;
+      if (endSoundRef.current) {
+        endSoundRef.current.play();
+        suppressEndSoundRef.current = true;
       }
 
-      startPhase('break');
-    } else {
+      phaseRef.current = 'rest-hold';
+      setCurrentPhase('break');
+      finalHoldRef.current = isFinal;
+      totalDurationRef.current = 300;
+      elapsedTimeRef.current = 0;
+      startTimeRef.current = performance.now();
+      setDisplayMinutes(0);
+      setDisplaySeconds(0);
+      timerRef.current = requestAnimationFrame(updateTimer);
+    } else if (phaseRef.current === 'break') {
       startPhase('work');
     }
-  }, [incrementRoundsCompleted, infiniteIteration, resetTimer, roundCount, startPhase]);
+  }, [
+    incrementRoundsCompleted,
+    infiniteIteration,
+    roundCount,
+    startPhase,
+  ]);
 
   const updateTimer = useCallback(
     (timestamp) => {
       elapsedTimeRef.current = timestamp - startTimeRef.current;
       const timeLeft = totalDurationRef.current - elapsedTimeRef.current;
 
-      if (timeLeft <= 0) {
+      if (phaseRef.current === 'rest-hold') {
+        if (timeLeft <= 0) {
+          if (finalHoldRef.current) {
+            resetTimer();
+            return;
+          }
+          phaseRef.current = 'break';
+          setCurrentPhase('break');
+          totalDurationRef.current = getTotalDuration('break');
+          elapsedTimeRef.current = 0;
+          startTimeRef.current = performance.now();
+          setDisplayTime(totalDurationRef.current);
+          timerRef.current = requestAnimationFrame(updateTimer);
+          return;
+        }
+        setDisplayMinutes(0);
+        setDisplaySeconds(0);
+        timerRef.current = requestAnimationFrame(updateTimer);
+      } else if (timeLeft <= 0) {
         setDisplayTime(0);
         handlePhaseCompletion();
       } else {
@@ -117,15 +147,16 @@ export function useCountdownTimer({
         timerRef.current = requestAnimationFrame(updateTimer);
       }
     },
-    [handlePhaseCompletion, setDisplayTime]
+    [getTotalDuration, handlePhaseCompletion, resetTimer, setDisplayTime]
   );
 
   const toggleStartPause = useCallback(() => {
     if (!hasStarted) {
       setHasStarted(true);
-      totalDurationRef.current = getTotalDuration(currentPhaseRef.current);
+      totalDurationRef.current =
+        phaseRef.current === 'work' ? getTotalDuration('work') : getTotalDuration('break');
     }
-    if (!isRunning && startSoundRef.current && currentPhaseRef.current === 'work') {
+    if (!isRunning && startSoundRef.current && phaseRef.current === 'work') {
       startSoundRef.current.play();
     }
     setIsRunning((prev) => !prev);
@@ -134,9 +165,10 @@ export function useCountdownTimer({
   // Update total duration and visible time when inputs change and timer is idle.
   useEffect(() => {
     if (!isRunning && elapsedTimeRef.current === 0) {
-      totalDurationRef.current = getTotalDuration(currentPhaseRef.current);
-      const minutes = currentPhaseRef.current === 'work' ? workMinutes : breakMinutes;
-      const seconds = currentPhaseRef.current === 'work' ? workSeconds : breakSeconds;
+      const activePhase = phaseRef.current === 'rest-hold' ? 'break' : phaseRef.current;
+      totalDurationRef.current = getTotalDuration(activePhase);
+      const minutes = activePhase === 'work' ? workMinutes : breakMinutes;
+      const seconds = activePhase === 'work' ? workSeconds : breakSeconds;
       setDisplayMinutes(minutes);
       setDisplaySeconds(seconds);
     }
@@ -175,12 +207,15 @@ export function useCountdownTimer({
   useEffect(() => {
     if (isRunning) {
       if (
-        (previousPhaseRef.current === 'break' || previousPhaseRef.current === null) &&
+        (previousPhaseRef.current === 'break' ||
+          previousPhaseRef.current === 'rest-hold' ||
+          previousPhaseRef.current === null) &&
         currentPhase === 'work'
       ) {
         if (startSoundRef.current) startSoundRef.current.play();
       } else if (previousPhaseRef.current === 'work' && currentPhase === 'break') {
-        if (endSoundRef.current) endSoundRef.current.play();
+        if (!suppressEndSoundRef.current && endSoundRef.current) endSoundRef.current.play();
+        suppressEndSoundRef.current = false;
       }
     }
     previousPhaseRef.current = currentPhase;

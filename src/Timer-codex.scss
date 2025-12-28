@@ -17,16 +17,19 @@
 }
 
 $font-family: 'Px Grotesk', Arial, sans-serif;
+$font-size-mid: 1.125rem;
 $font-size-base: 1rem;
 $font-size-label: 0.75rem;
 
 $count-down: rgba(0, 0, 0, 0.75);
+$count-down-secondary: rgba(0, 0, 0, 0.6);
 $highlight: #09E48F;
 $rest: #ff5555;
 
-$primary-text: #19191C;
-$secondary-text: #545156;
-$tertiary-text: #6A6A73;
+$primary: #19191C;
+$primary-disabled: #938F94;
+$secondary: #545156;
+$tertiary: #6A6A73;
 
 $accent: #E7E7EE;
 $accent-active: #DADAE2;
@@ -34,14 +37,12 @@ $accent-transparent: rgba(0, 0, 0, 0.08);
 $accent-transparent-hover: rgba(0, 0, 0, 0.2);
 $accent-transparent-active: rgba(0, 0, 0, 0.4);
 
+$accent-secondary-transparent: rgba(0, 0, 0, 0.06);
+
 $border-default: #A6A6AC;
 
 $toggle-on: $highlight;
 $toggle-off: $accent-active;
-// $toggle-focus: #2b8cff;
-// $toggle-on: $highlight;
-// $toggle-off: $border-default;
-// $toggle-focus: #2b8cff;
 
 %time-large {
   font-size: clamp(140px, 24vw, 360px);
@@ -59,7 +60,7 @@ $toggle-off: $accent-active;
   background: $accent;
   border-radius: 8px;
   padding: 0 12px;
-  color: $primary-text;
+  color: $primary;
 }
 
 %input-field {
@@ -69,8 +70,12 @@ $toggle-off: $accent-active;
   font-family: $font-family;
   font-size: $font-size-base;
   text-align: left;
-  color: $primary-text;
+  color: $primary;
   transition: border-color 140ms ease, box-shadow 140ms ease;
+
+  &::placeholder {
+    color: $primary-disabled;
+  }
 
   &:hover {
     border-color: $border-default;
@@ -84,17 +89,17 @@ $toggle-off: $accent-active;
 }
 
 .text-primary {
-  color: $primary-text;
+  color: $primary;
   font-weight: 600;
 }
 
 .text-secondary {
-  color: $secondary-text;
+  color: $secondary;
   font-weight: 500;
 }
 
 .text-tertiary {
-  color: $tertiary-text;
+  color: $tertiary;
   font-weight: 500;
 }
 
@@ -122,9 +127,17 @@ $toggle-off: $accent-active;
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    font-size: $font-size-base;
+    font-size: $font-size-mid;
     font-weight: 500;
-    color: $primary-text;
+    color: $count-down-secondary;
+
+    .round-indicator-container {
+      display: inline-flex;
+      align-items: center;
+      background-color: $accent-secondary-transparent;
+      padding: 6px 12px;
+      border-radius: 16px;
+    }
   }
 
   .center {
@@ -171,12 +184,12 @@ $toggle-off: $accent-active;
   }
 
   .start-button {
-    width: 96px;
-    height: 96px;
+    width: 112px;
+    height: 112px;
     border-radius: 50%;
     border: none;
     background: $accent-transparent;
-    color: $primary-text;
+    color: $primary;
     font-size: $font-size-base;
     font-family: $font-family;
     cursor: pointer;
@@ -216,7 +229,7 @@ $toggle-off: $accent-active;
 
     span {
       font-size: $font-size-base;
-      color: $primary-text;
+      color: $primary;
     }
   }
 
@@ -235,7 +248,7 @@ $toggle-off: $accent-active;
     flex-direction: column;
     gap: 6px;
     font-size: $font-size-label;
-    color: $tertiary-text;
+    color: $tertiary;
 
     input {
       @extend %input-field;
@@ -247,7 +260,7 @@ $toggle-off: $accent-active;
     align-items: center;
     gap: 32px;
     font-size: $font-size-label;
-    color: $primary-text;
+    color: $primary;
   }
 
   .infinite {
@@ -259,7 +272,7 @@ $toggle-off: $accent-active;
 
     .label {
       font-size: $font-size-base;
-      color: $secondary-text;
+      color: $secondary;
     }
 
     .toggle {
