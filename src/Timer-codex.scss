@@ -229,6 +229,18 @@ $toggle-off: $accent-active;
     }
   }
 
+  .controls-panel {
+    transition: transform 200ms ease, opacity 200ms ease;
+    transform: translateY(0);
+    opacity: 1;
+
+    &.controls-hidden {
+      transform: translateY(40px);
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
   .floating-actions {
     position: fixed;
     left: 50%;

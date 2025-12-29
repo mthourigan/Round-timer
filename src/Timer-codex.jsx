@@ -3,6 +3,7 @@ import './Timer-codex.scss';
 import { useCountdownTimer } from './useCountdownTimer';
 import TimerControls from './components/TimerControls';
 import TimerDisplay from './components/TimerDisplay';
+import FloatingActions from './components/FloatingActions';
 
 function TimerCodex() {
   const [workMinutes, setWorkMinutes] = useState(5);
@@ -72,7 +73,6 @@ function TimerCodex() {
   const nextRoundNumber = infiniteIteration
     ? roundsCompleted + 1
     : Math.min(roundsCompleted + 1, Math.max(roundCount, 1));
-  const showControls = !hasStarted;
   const ringAngle = Math.min(1, Math.max(0, progress ?? 0)) * 360;
 
   return (
@@ -94,7 +94,7 @@ function TimerCodex() {
 
         <TimerDisplay displayMinutes={displayMinutes} displaySeconds={displaySeconds} />
 
-        {showControls && (
+        <div className={`controls-panel ${hasStarted ? 'controls-hidden' : ''}`}>
           <TimerControls
             hasStarted={hasStarted}
             workMinutes={workMinutes}
@@ -111,21 +111,16 @@ function TimerCodex() {
             onToggleInfinite={(event) => setInfiniteIteration(event.target.checked)}
             displayInputValue={displayInputValue}
           />
-        )}
-
-        <div className="floating-actions">
-          <div className="start-wrap">
-            <div className="start-ring" style={{ '--progress-angle': `${ringAngle}deg` }} />
-            <button className="start-button" type="button" onClick={toggleStartPause}>
-              {startLabel}
-            </button>
-          </div>
-          {hasStarted && !isRunning && (
-            <button className="start-button" type="button" onClick={resetTimer}>
-              Reset
-            </button>
-          )}
         </div>
+
+        <FloatingActions
+          ringAngle={ringAngle}
+          startLabel={startLabel}
+          hasStarted={hasStarted}
+          isRunning={isRunning}
+          onToggleStartPause={toggleStartPause}
+          onReset={resetTimer}
+        />
       </div>
 
     </>
