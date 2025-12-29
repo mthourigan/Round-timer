@@ -196,15 +196,15 @@ $toggle-off: $accent-active;
 
   .start-ring {
     position: absolute;
-    inset: 8px;
+    inset: 10px;
     border-radius: 50%;
     pointer-events: none;
     background: conic-gradient(
-      $primary var(--progress-angle, 0deg),
-      $accent var(--progress-angle, 0deg)
+      $count-down-tertiary var(--progress-angle, 0deg),
+      transparent var(--progress-angle, 0deg)
     );
-    mask: radial-gradient(farthest-side, transparent calc(50% - 6px), #000 calc(50% - 6px));
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - 6px), #000 calc(50% - 6px));
+    mask: radial-gradient(farthest-side, transparent calc(99% - 3px), #000 calc(99% - 3px));
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(99% - 3px), #000 calc(99% - 3px));
   }
 
   .start-button {
