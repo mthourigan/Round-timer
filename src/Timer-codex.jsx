@@ -73,6 +73,7 @@ function TimerCodex() {
     ? roundsCompleted + 1
     : Math.min(roundsCompleted + 1, Math.max(roundCount, 1));
   const showControls = !hasStarted;
+  const ringAngle = Math.min(1, Math.max(0, progress ?? 0)) * 360;
 
   return (
     <>
@@ -91,16 +92,7 @@ function TimerCodex() {
           </div>
         </div>
 
-      <TimerDisplay
-        displayMinutes={displayMinutes}
-        displaySeconds={displaySeconds}
-        startLabel={startLabel}
-        hasStarted={hasStarted}
-        isRunning={isRunning}
-        progress={progress}
-        onToggleStartPause={toggleStartPause}
-        onReset={resetTimer}
-      />
+        <TimerDisplay displayMinutes={displayMinutes} displaySeconds={displaySeconds} />
 
         {showControls && (
           <TimerControls
@@ -120,6 +112,20 @@ function TimerCodex() {
             displayInputValue={displayInputValue}
           />
         )}
+
+        <div className="floating-actions">
+          <div className="start-wrap">
+            <div className="start-ring" style={{ '--progress-angle': `${ringAngle}deg` }} />
+            <button className="start-button" type="button" onClick={toggleStartPause}>
+              {startLabel}
+            </button>
+          </div>
+          {hasStarted && !isRunning && (
+            <button className="start-button" type="button" onClick={resetTimer}>
+              Reset
+            </button>
+          )}
+        </div>
       </div>
 
     </>
